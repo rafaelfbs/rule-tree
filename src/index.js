@@ -10,6 +10,7 @@ import { LesserThanValidator } from './validators/LesserThanValidator';
 import { NotValidator } from './validators/NotValidator';
 import { OrValidator } from './validators/OrValidator';
 import { SomeValidator } from './validators/SomeValidator';
+import { SumMatchesRuleValidator } from "./validators/SumMatchesRuleValidator";
 
 export const treeBuilder = new RuleTreeBuilder();
 
@@ -24,7 +25,8 @@ treeBuilder
     .addCondition('lesser-than', tree => new LesserThanValidator(tree.dataSelector))
     .addCondition('not', tree => new NotValidator(tree))
     .addCondition('or', tree => new OrValidator(tree))
-    .addCondition('some', tree => new SomeValidator(tree));
+    .addCondition('some', tree => new SomeValidator(tree))
+    .addCondition('sum-matches-rule', tree => new SumMatchesRuleValidator(tree));
 
 export function createRuleTree(schema) {
     return treeBuilder.build(schema);
