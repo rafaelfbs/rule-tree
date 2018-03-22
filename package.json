@@ -8,7 +8,10 @@
     "build": "babel ./src -d ./lib"
   },
   "keywords": [
-    "validator", "validation", "rule", "tree"
+    "validator",
+    "validation",
+    "rule",
+    "tree"
   ],
   "author": "Rafael Ferrari <rafael.ferrari.bs@gmail.com>",
   "license": "MIT",
