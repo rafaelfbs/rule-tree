@@ -1,14 +1,15 @@
 
-export class RuleParser {
+export class DataRuleParser {
     constructor(ruleTree) {
         this.ruleTree = ruleTree;
     }
 
     parse(node) {
-        const { condition, rule } = node;
+        const { condition, data, rule } = node;
         return {
             condition,
             options: {
+                data,
                 rule: this.ruleTree.parse(rule)
             }
         };

@@ -1,18 +1,19 @@
 import { RuleTree } from './RuleTree';
-import { RuleParser } from './parsers/RuleParser';
 import { DataSelector } from './selectors/DataSelector';
 
 export class RuleTreeBuilder {
     constructor() {
         this.options = {
             dataSelector: new DataSelector(),
-            ruleParser: new RuleParser(),
-            validators: {}
+            validators: {},
+            parsers: {}
         };
     }
     
-    addCondition(name, validatorFactory) {
+    addCondition(name, ruleParserFactory, validatorFactory) {
+        this.options.parsers[name] = ruleParserFactory;
         this.options.validators[name] = validatorFactory;
+
         return this;
     }
     

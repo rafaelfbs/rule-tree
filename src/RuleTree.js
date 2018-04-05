@@ -1,15 +1,13 @@
-import { RuleParser } from './parsers/RuleParser';
-import { DataSelector } from './selectors/DataSelector';
-
-import { EqualsValidator } from './validators/EqualsValidator';
 
 export class RuleTree {
     constructor(schema, options = {}) {
         this.schema = schema;
         
         this.dataSelector = options.dataSelector;
-        this.ruleParser = options.ruleParser;
         this.validators = options.validators;
+        this.parsers = options.parsers;
+
+        this.rootRule = this.parse(this.schema);
     }
     
     getValidator(name) {
@@ -22,8 +20,22 @@ export class RuleTree {
         return validatorFactory(this);
     }
 
+    getParser(name) {
+        const parserFactory = this.parsers[name];
+
+        if (!parserFactory) {
+            throw new SyntaxError(`No parser "${name}" found`);
+        }
+
+        return parserFactory(this);
+    }
+
+    parse(node) {
+        return this.getParser(node.condition).parse(node);
+    }
+
     validate(data) {
-        const rule = this.ruleParser.parse(this.schema);
+        const rule = this.rootRule;
         const validator = this.getValidator(rule.condition);
         
         return validator.validate(data, rule);

@@ -3,29 +3,39 @@ const SELECTOR_REGEX = /(([.#]?)(\w+)(\[])?)/g;
 
 export class DataSelector {
     select(data, selector) {
-        if (!selector) {
+        let dataSelector = selector;
+
+        if (!dataSelector) {
             return data;
         }
 
-        const matches = this.getMatches(selector);
+        if (!this.isPropertyAccessor(selector[0]) && !this.isMethodAccessor(selector[0])) {
+            dataSelector = '.' + dataSelector;
+        }
+
+        const matches = this.getMatches(dataSelector);
         const parentMatch = ['root'];
+
+        if (!matches.length) {
+            throw new SyntaxError(`Wrong selector syntax in "${selector}"`);
+        }
         
         return matches.reduce((data, match) => {
-            const [_, cmd, accessorOrEmpty, path, modifier] = match;
-            const accessor = accessorOrEmpty || '.';
+            const [cmd, accessor, path, modifier] = match.slice(1);
             const absolutePath = parentMatch.join('');
             
             parentMatch.push(`${accessor}${path}${modifier || ''}`);
             
             if (this.isPropertyAccessor(accessor)) return this.getProperty(data, path, absolutePath, modifier);
             if (this.isMethodAccessor(accessor)) return this.getMethod(data, path, absolutePath, modifier);
-            
-            throw new SyntaxError(`Wrong selector syntax in "${cmd}`);
+
+            // TODO: fix regex matcher to match from start of string
+            throw new SyntaxError(`Wrong selector syntax in "${cmd}"`);
         }, data);
     }
     
     isPropertyAccessor(accessor) {
-        return accessor === '' || accessor === '.';
+        return accessor === '.';
     }
     
     isMethodAccessor(accessor) {

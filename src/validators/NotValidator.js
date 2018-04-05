@@ -5,9 +5,8 @@ export class NotValidator {
     }
     
     validate(data, rule) {
-        const { rule: node } = rule.options;
+        const { rule: targetRule } = rule.options;
         const validator = this.ruleTree.getValidator(targetRule.condition);
-        const targetRule = this.ruleParser.parse(node);
         return !validator.validate(data, targetRule);
     }
 }

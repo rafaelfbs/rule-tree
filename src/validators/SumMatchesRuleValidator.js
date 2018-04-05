@@ -7,23 +7,22 @@ export class SumMatchesRuleValidator {
     validate(data, rule) {
         const {
             list: listSelector,
-            filter: filterNode,
+            filter: filterRule,
             data: dataSelector,
-            rule: dataNode
+            rule: dataRule
         } = rule.options;
 
         let listSelected = this.ruleTree.dataSelector.select(data, listSelector);
 
-        if (filterNode) {
-            const filterRule = this.ruleTree.ruleParser.parse(filterNode);
-            listSelected = listSelected.filter(item => this.ruleTree.getValidator(filterRule.condition).validate(item, filterRule));
+        if (filterRule) {
+            const validator = this.ruleTree.getValidator(filterRule.condition);
+            listSelected = listSelected.filter(item => validator.validate(item, filterRule));
         }
 
         if (dataSelector) {
             listSelected = listSelected.map(item => this.ruleTree.dataSelector.select(item, dataSelector));
         }
 
-        const dataRule = this.ruleTree.ruleParser.parse(dataNode);
         const dataSelected = listSelected.reduce((sum, value) => sum + value, 0);
         return this.ruleTree.getValidator(dataRule.condition).validate(dataSelected, dataRule);
     }

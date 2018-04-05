@@ -8,7 +8,6 @@ export class AndValidator {
         const { rules } = rule.options;
         
         return rules
-            .map(rule => this.ruleTree.ruleParser.parse(rule))
             .every(rule => this.ruleTree.getValidator(rule.condition).validate(data, rule));
     }
 }
