@@ -8,23 +8,22 @@ A simpler structure for complex validations
 ```javascript
 import { createRuleTree } from 'rule-tree';
 
-const tree = createRuleTree({
+const activeUserHasManyFriends = createRuleTree({
     condition: 'and',
     rules: [
-        { condition: 'equals', data: 'user#getStatus', value: 'active' },
-        { condition: 'greater-than', data: 'user.friends.length', value: 1 }
+        { condition: 'equals', data: '#getStatus', value: 'active' },
+        { condition: 'greater-than', data: '.friends.length', value: 1 }
     ]
 });
 
-tree.validate({
+const user = {
     id: 1,
-    user: {
-        id: 1,
-        name: 'John',
-        getStatus: () => 'active',
-        friends: [2, 3]
-    }
-});
+    name: 'John',
+    getStatus: () => 'active',
+    friends: [2, 3]
+};
+
+activeUserHasManyFriends.validate(user);
 ```
 
 ### Conditions
@@ -43,17 +42,18 @@ tree.validate({
 * not
 * or
 * some
+* sum-matches-rule
 
 ##### Custom Conditions
 
 ```javascript
-import { treeBuilder } from 'rule-tree';
+import { treeBuilder, DataParserFactory, DataValueParserFactory } from 'rule-tree';
 
 treeBuilder
-    .addCondition('is-john', (tree) => (data, rule) => data === 'John'),
-    .addCondition('is-fred', (tree) => ({
+    .addCondition('is-john', DataParserFactory, (tree) => (data, rule) => data === 'John'),
+    .addCondition('is-fred', DataValueParserFactory, (tree) => ({
         validate(data, rule) {
-            const selected = tree.dataSelector.select(data, rule.options.path);
+            const selected = tree.dataSelector.select(data, rule.options.value);
             return selected === 'Fred';
         }
     }));
@@ -62,4 +62,3 @@ const tree = treeBuilder.build(schema);
 ```
 
 See validators for more examples
-

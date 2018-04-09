@@ -16,8 +16,16 @@ export class RuleTree {
         if (!validatorFactory) {
             throw new SyntaxError(`No validator "${name}" found`);
         }
-        
-        return validatorFactory(this);
+
+        const validator = validatorFactory(this);
+
+        if (!validator) {
+            throw new SyntaxError(`No validator "${name}" found`);
+        }
+
+        return typeof validator === 'function'
+            ? ({ validate: validator })
+            : validator;
     }
 
     getParser(name) {
@@ -27,7 +35,15 @@ export class RuleTree {
             throw new SyntaxError(`No parser "${name}" found`);
         }
 
-        return parserFactory(this);
+        const parser = parserFactory(this);
+
+        if (!parser) {
+            throw new SyntaxError(`No parser "${name}" found`);
+        }
+
+        return typeof parser === 'function'
+            ? ({ parse: parser })
+            : parser;
     }
 
     parse(node) {

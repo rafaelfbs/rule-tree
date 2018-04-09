@@ -1,6 +1,15 @@
 import { RuleTreeBuilder } from './RuleTreeBuilder';
+
+import { DataParser } from "./parsers/DataParser";
+import { DataRuleParser } from "./parsers/DataRuleParser";
+import { DataValueParser } from "./parsers/DataValueParser";
+import { ListFilterDataRuleParser } from "./parsers/ListFilterDataRuleParser";
+import { RuleParser } from "./parsers/RuleParser";
+import { RulesParser } from "./parsers/RulesParser";
+
 import { AndValidator } from './validators/AndValidator';
 import { EqualsValidator } from './validators/EqualsValidator';
+import { EveryValidator } from "./validators/EveryValidator";
 import { ExistsValidator } from './validators/ExistsValidator';
 import { GreaterThanEqualsValidator } from './validators/GreaterThanEqualsValidator';
 import { GreaterThanValidator } from './validators/GreaterThanValidator';
@@ -11,12 +20,6 @@ import { NotValidator } from './validators/NotValidator';
 import { OrValidator } from './validators/OrValidator';
 import { SomeValidator } from './validators/SomeValidator';
 import { SumMatchesRuleValidator } from "./validators/SumMatchesRuleValidator";
-import { RulesParser } from "./parsers/RulesParser";
-import { RuleParser } from "./parsers/RuleParser";
-import { DataRuleParser } from "./parsers/DataRuleParser";
-import { DataValueParser } from "./parsers/DataValueParser";
-import { ListFilterDataRuleParser } from "./parsers/ListFilterDataRuleParser";
-import { EveryValidator } from "./validators/EveryValidator";
 
 export const treeBuilder = new RuleTreeBuilder();
 
@@ -34,6 +37,7 @@ export const SOME_CONDITION = 'some';
 export const EVERY_CONDITION = 'every';
 export const SUM_MATCHES_RULE_CONDITION = 'sum-matches-rule';
 
+export const DataParserFactory = () => new DataParser();
 export const DataRuleParserFactory = tree => new DataRuleParser(tree);
 export const DataValueParserFactory = () => new DataValueParser();
 export const ListFilterDataRuleParserFactory = tree => new ListFilterDataRuleParser(tree);
