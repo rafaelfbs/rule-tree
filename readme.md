@@ -1,5 +1,7 @@
 
 # Rule Tree
+[![Build Status](https://travis-ci.org/rafaelfbs/rule-tree.svg?branch=master)](https://travis-ci.org/rafaelfbs/rule-tree)
+[![codecov](https://codecov.io/gh/rafaelfbs/rule-tree/branch/master/graph/badge.svg)](https://codecov.io/gh/rafaelfbs/rule-tree)
 
 A simpler structure for complex validations
 
@@ -50,7 +52,7 @@ activeUserHasManyFriends.validate(user);
 import { treeBuilder, DataParserFactory, DataValueParserFactory } from 'rule-tree';
 
 treeBuilder
-    .addCondition('is-john', DataParserFactory, (tree) => (data, rule) => data === 'John'),
+    .addCondition('is-john', DataParserFactory, (tree) => (data, rule) => data === 'John')
     .addCondition('is-fred', DataValueParserFactory, (tree) => ({
         validate(data, rule) {
             const selected = tree.dataSelector.select(data, rule.options.value);
