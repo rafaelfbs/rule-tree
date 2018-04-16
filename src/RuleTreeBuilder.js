@@ -1,10 +1,12 @@
 import { RuleTree } from './RuleTree';
 import { DataSelector } from './selectors/DataSelector';
+import { Parser } from "./selectors/parser/Parser";
+import { Tokenizer } from "./selectors/tokenizer/Tokenizer";
 
 export class RuleTreeBuilder {
     constructor() {
         this.options = {
-            dataSelector: new DataSelector(),
+            dataSelector: new DataSelector(new Parser(new Tokenizer())),
             validators: {},
             parsers: {}
         };
