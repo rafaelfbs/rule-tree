@@ -2,6 +2,7 @@
 # Rule Tree
 [![Build Status](https://travis-ci.org/rafaelfbs/rule-tree.svg?branch=master)](https://travis-ci.org/rafaelfbs/rule-tree)
 [![codecov](https://codecov.io/gh/rafaelfbs/rule-tree/branch/master/graph/badge.svg)](https://codecov.io/gh/rafaelfbs/rule-tree)
+[![Maintainability](https://api.codeclimate.com/v1/badges/42cee647e981e6719178/maintainability)](https://codeclimate.com/github/rafaelfbs/rule-tree/maintainability)
 
 A simpler structure for complex validations
 
