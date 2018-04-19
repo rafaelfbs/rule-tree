@@ -1,12 +1,9 @@
+import { BaseValidator } from "./base/BaseValidator";
 
-export class EqualsValidator {
-    constructor(dataSelector) {
-        this.dataSelector = dataSelector;
-    }
-    
+export class EqualsValidator extends BaseValidator {
     validate(data, rule) {
         const { data: selector, value } = rule.options;
-        const selected = this.dataSelector.select(data, selector);
+        const selected = this.ruleTree.dataSelector.select(data, selector);
         return selected === value;
     }
 }

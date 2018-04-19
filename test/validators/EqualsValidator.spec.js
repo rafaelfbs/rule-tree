@@ -18,7 +18,7 @@ describe('EqualsValidator', () => {
                         .mockReturnValueOnce(data)
                 };
 
-                const validator = new EqualsValidator(dataSelector);
+                const validator = new EqualsValidator({ dataSelector });
 
                 expect(validator.validate(data, rule)).toBe(true);
                 expect(dataSelector.select.mock.calls[0][0]).toBe(data);
@@ -41,7 +41,7 @@ describe('EqualsValidator', () => {
                         .mockReturnValueOnce(data)
                 };
 
-                const validator = new EqualsValidator(dataSelector);
+                const validator = new EqualsValidator({ dataSelector });
 
                 expect(validator.validate(data, rule)).toBe(false);
                 expect(dataSelector.select.mock.calls[0][0]).toBe(data);
