@@ -1,9 +1,6 @@
+import { BaseValidator } from "./base/BaseValidator";
 
-export class EveryValidator {
-    constructor(ruleTree) {
-        this.ruleTree = ruleTree;
-    }
-    
+export class EveryValidator extends BaseValidator {
     validate(data, rule) {
         const { data: selector, rule: targetRule } = rule.options;
         const selected = this.ruleTree.dataSelector.select(data, selector);

@@ -18,7 +18,7 @@ describe('InValidator', () => {
                         .mockReturnValueOnce(data)
                 };
 
-                const validator = new InValidator(dataSelector);
+                const validator = new InValidator({ dataSelector });
 
                 expect(validator.validate(data, rule)).toBe(true);
                 expect(dataSelector.select.mock.calls[0][0]).toBe(data);
@@ -41,7 +41,7 @@ describe('InValidator', () => {
                         .mockReturnValueOnce(data)
                 };
 
-                const validator = new InValidator(dataSelector);
+                const validator = new InValidator({ dataSelector });
 
                 expect(validator.validate(data, rule)).toBe(false);
                 expect(dataSelector.select.mock.calls[0][0]).toBe(data);

@@ -18,7 +18,7 @@ describe('LesserThanValidator', () => {
                         .mockReturnValueOnce(data)
                 };
 
-                const validator = new LesserThanValidator(dataSelector);
+                const validator = new LesserThanValidator({ dataSelector });
 
                 expect(validator.validate(data, rule)).toBe(false);
                 expect(dataSelector.select.mock.calls[0][0]).toBe(data);
@@ -41,7 +41,7 @@ describe('LesserThanValidator', () => {
                         .mockReturnValueOnce(data)
                 };
 
-                const validator = new LesserThanValidator(dataSelector);
+                const validator = new LesserThanValidator({ dataSelector });
 
                 expect(validator.validate(data, rule)).toBe(false);
                 expect(dataSelector.select.mock.calls[0][0]).toBe(data);
@@ -64,7 +64,7 @@ describe('LesserThanValidator', () => {
                         .mockReturnValueOnce(data)
                 };
 
-                const validator = new LesserThanValidator(dataSelector);
+                const validator = new LesserThanValidator({ dataSelector });
 
                 expect(validator.validate(data, rule)).toBe(true);
                 expect(dataSelector.select.mock.calls[0][0]).toBe(data);

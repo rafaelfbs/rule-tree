@@ -1,9 +1,6 @@
+import { BaseValidator } from "./base/BaseValidator";
 
-export class SumMatchesRuleValidator {
-    constructor(ruleTree) {
-        this.ruleTree = ruleTree;
-    }
-
+export class SumMatchesRuleValidator extends BaseValidator {
     validate(data, rule) {
         const {
             list: listSelector,

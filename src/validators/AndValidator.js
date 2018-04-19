@@ -1,9 +1,6 @@
+import { BaseValidator } from "./base/BaseValidator";
 
-export class AndValidator {
-    constructor(ruleTree) {
-        this.ruleTree = ruleTree;
-    }
-    
+export class AndValidator extends BaseValidator {
     validate(data, rule) {
         const { rules } = rule.options;
         
