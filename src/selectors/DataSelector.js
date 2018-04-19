@@ -16,16 +16,24 @@ export class DataSelector {
         }, data);
     }
 
-    selectProperty(data, entry, selector) {
+    selectEntry(data, entry, selector, getter) {
         if (entry.modifier && entry.modifier.type === 'flat-map-modifier') {
             if (!Array.isArray(data)) {
                 throw new SyntaxError(`Data is not an array for flat map property (${selector.substring(entry.start, entry.end)})`);
             }
 
-            return this.reduceData(data, entry, selector, this.getProperty.bind(this));
+            return this.reduceData(data, entry, selector, getter);
         }
 
-        return this.getProperty(data, entry, selector);
+        return getter(data, entry, selector);
+    }
+
+    selectProperty(data, entry, selector) {
+        return this.selectEntry(data, entry, selector, this.getProperty.bind(this));
+    }
+
+    selectMethod(data, entry, selector) {
+        return this.selectEntry(data, entry, selector, this.getMethod.bind(this));
     }
 
     getProperty(data, entry, selector) {
@@ -36,18 +44,6 @@ export class DataSelector {
         }
 
         throw new SyntaxError(`No property "${path}" in data (${selector.substring(entry.start, entry.end)})`);
-    }
-
-    selectMethod(data, entry, selector) {
-        if (entry.modifier && entry.modifier.type === 'flat-map-modifier') {
-            if (!Array.isArray(data)) {
-                throw new SyntaxError(`Data is not an array for flat map property (${selector.substring(entry.start, entry.end)})`);
-            }
-
-            return this.reduceData(data, entry, selector, this.getMethod.bind(this));
-        }
-
-        return this.getMethod(data, entry, selector);
     }
 
     getMethod(data, entry, selector) {
