@@ -9,41 +9,35 @@ export class RuleTree {
 
         this.rootRule = this.parse(this.schema);
     }
+
+    createOrGetDependency(dependencyType, dependencies, name, createDependencyObject) {
+        const factory = dependencies[name];
+
+        if (!factory) {
+            this.raiseDependencyCreationError(dependencyType, name)
+        }
+
+        const dependency = factory(this);
+
+        if (!dependency) {
+            this.raiseDependencyCreationError(dependencyType, name)
+        }
+
+        return typeof dependency === 'function'
+            ? createDependencyObject(dependency)
+            : dependency;
+    }
+
+    raiseDependencyCreationError(dependencyType, name) {
+        throw new SyntaxError(`No ${dependencyType} "${name}" found`);
+    }
     
     getValidator(name) {
-        const validatorFactory = this.validators[name];
-        
-        if (!validatorFactory) {
-            throw new SyntaxError(`No validator "${name}" found`);
-        }
-
-        const validator = validatorFactory(this);
-
-        if (!validator) {
-            throw new SyntaxError(`No validator "${name}" found`);
-        }
-
-        return typeof validator === 'function'
-            ? ({ validate: validator })
-            : validator;
+        return this.createOrGetDependency('validator', this.validators, name, validate => ({ validate }));
     }
 
     getParser(name) {
-        const parserFactory = this.parsers[name];
-
-        if (!parserFactory) {
-            throw new SyntaxError(`No parser "${name}" found`);
-        }
-
-        const parser = parserFactory(this);
-
-        if (!parser) {
-            throw new SyntaxError(`No parser "${name}" found`);
-        }
-
-        return typeof parser === 'function'
-            ? ({ parse: parser })
-            : parser;
+        return this.createOrGetDependency('parser', this.parsers, name, parse => ({ parse }));
     }
 
     parse(node) {
