@@ -4,7 +4,7 @@ import { Parser } from "../../src/selectors/parser/Parser";
 
 describe('DataSelector', () => {
     describe('#select', () => {
-        it('returns data when no selector is passed', () => {
+        it('returns data when no selector is present', () => {
             const data = {};
             const selector = new DataSelector(new Parser(new Tokenizer()));
 

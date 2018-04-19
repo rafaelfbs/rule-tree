@@ -1,3 +1,4 @@
+import { TokenizerContext } from "../tokenizer/TokenizerContext";
 
 export class Parser {
     constructor(tokenizer) {
@@ -5,36 +6,36 @@ export class Parser {
     }
 
     parse(selector) {
-        this.tokenizer.setSelector(selector);
+        const context = new TokenizerContext(selector);
 
-        const len = this.tokenizer.context.selector.length;
+        const len = selector.length;
         const entries = [];
 
-        while (this.tokenizer.context.pos < len) {
-            entries.push(this.parseIdentifierWithAccessor());
+        while (context.pos < len) {
+            entries.push(this.parseIdentifierWithAccessor(context));
         }
 
         return { type: 'selection', entries };
     }
 
-    parseIdentifierWithAccessor() {
-        const accessor = this.tokenizer.nextToken();
+    parseIdentifierWithAccessor(context) {
+        const accessor = this.tokenizer.nextToken(context);
 
         if (accessor.type === 'property' || accessor.type === 'method') {
-            this.tokenizer.consumeToken();
-            return this.parseIdentifier(accessor);
+            this.tokenizer.consumeToken(context);
+            return this.parseIdentifier(context, accessor);
         } else if (accessor.type === 'identifier') {
-            return this.parseIdentifier({ type: 'property', start: accessor.start, end: accessor.start });
+            return this.parseIdentifier(context, { type: 'property', start: accessor.start, end: accessor.start });
         }
 
         this.raiseException(accessor);
     }
 
-    parseIdentifier(accessor) {
-        const identifier = this.tokenizer.consumeToken();
+    parseIdentifier(context, accessor) {
+        const identifier = this.tokenizer.consumeToken(context);
 
         if (identifier.type === 'identifier') {
-            const modifier = this.parseModifier();
+            const modifier = this.parseModifier(context);
             return {
                 type: accessor.type,
                 value: identifier.value,
@@ -47,14 +48,14 @@ export class Parser {
         this.raiseException(identifier);
     }
 
-    parseModifier() {
-        const modifierStart = this.tokenizer.nextToken();
+    parseModifier(context) {
+        const modifierStart = this.tokenizer.nextToken(context);
 
         if (modifierStart.type === 'bracket-start') {
-            const modifierEnd = this.tokenizer.consumeAndNextToken();
+            const modifierEnd = this.tokenizer.consumeAndNextToken(context);
 
             if (modifierEnd.type === 'bracket-end') {
-                this.tokenizer.consumeToken();
+                this.tokenizer.consumeToken(context);
                 return { type: 'flat-map-modifier' };
             }
 

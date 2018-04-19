@@ -1,43 +1,39 @@
 
 export class Tokenizer {
-    setSelector(selector) {
-        this.context = { pos: 0, selector };
-    }
-
-    consumeToken() {
-        const token = this.nextToken();
-        this.context.pos = token.end;
+    consumeToken(context) {
+        const token = this.nextToken(context);
+        context.pos = token.end;
         return token;
     }
 
-    nextToken() {
-        const { pos, selector } = this.context;
+    nextToken(context) {
+        const { pos, selector } = context;
 
         return pos < selector.length
-            ? this.parseToken(selector.charAt(pos))
+            ? this.parseToken(context, selector.charAt(pos))
             : { type: 'eof', start: pos, end: pos };
     }
 
-    consumeAndNextToken() {
-        this.consumeToken();
-        return this.nextToken();
+    consumeAndNextToken(context) {
+        this.consumeToken(context);
+        return this.nextToken(context);
     }
 
-    parseToken(char) {
+    parseToken(context, char) {
         switch (char) {
-            case '.': return { type: 'property', start: this.context.pos, end: this.context.pos + 1 };
-            case '#': return { type: 'method', start: this.context.pos, end: this.context.pos + 1 };
-            case '[': return { type: 'bracket-start', start: this.context.pos, end: this.context.pos + 1 };
-            case ']': return { type: 'bracket-end', start: this.context.pos, end: this.context.pos + 1 };
+            case '.': return { type: 'property', start: context.pos, end: context.pos + 1 };
+            case '#': return { type: 'method', start: context.pos, end: context.pos + 1 };
+            case '[': return { type: 'bracket-start', start: context.pos, end: context.pos + 1 };
+            case ']': return { type: 'bracket-end', start: context.pos, end: context.pos + 1 };
             default:
-                if (this.isIdentifierChar(char)) return this.parseIdentifierToken();
-                this.raiseException(char, this.context.pos);
+                if (this.isIdentifierChar(char)) return this.parseIdentifierToken(context);
+                this.raiseException(char, context.pos);
         }
     }
 
-    parseIdentifierToken() {
-        let pos = this.context.pos;
-        let selector = this.context.selector;
+    parseIdentifierToken(context) {
+        let pos = context.pos;
+        let selector = context.selector;
         let len = selector.length;
 
         while (pos < len) {
@@ -52,8 +48,8 @@ export class Tokenizer {
 
         return {
             type: 'identifier',
-            value: this.context.selector.substring(this.context.pos, pos),
-            start: this.context.pos,
+            value: context.selector.substring(context.pos, pos),
+            start: context.pos,
             end: pos
         };
     }
