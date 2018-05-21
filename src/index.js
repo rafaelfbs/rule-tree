@@ -8,6 +8,7 @@ import { RuleParser } from "./parsers/RuleParser";
 import { RulesParser } from "./parsers/RulesParser";
 
 import { AndValidator } from './validators/AndValidator';
+import { EmptyValidator } from "./validators/EmptyValidator";
 import { EqualsValidator } from './validators/EqualsValidator';
 import { EveryValidator } from "./validators/EveryValidator";
 import { ExistsValidator } from './validators/ExistsValidator';
@@ -24,6 +25,7 @@ import { SumMatchesRuleValidator } from "./validators/SumMatchesRuleValidator";
 export const treeBuilder = new RuleTreeBuilder();
 
 export const AND_CONDITION = 'and';
+export const EMPTY_CONDITION = 'empty';
 export const EQUALS_CONDITION = 'equals';
 export const EXISTS_CONDITION = 'exists';
 export const GREATER_THAN_EQUALS_CONDITION = 'greater-than-equals';
@@ -45,6 +47,7 @@ export const RuleParserFactory = tree => new RuleParser(tree);
 export const RulesParserFactory = tree => new RulesParser(tree);
 
 export const AndValidatorFactory = tree => new AndValidator(tree);
+export const EmptyValidatorFactory = tree => new EmptyValidator(tree);
 export const EqualsValidatorFactory = tree => new EqualsValidator(tree);
 export const ExistsValidatorFactory = tree => new ExistsValidator(tree);
 export const GreaterThanEqualsValidatorFactory = tree => new GreaterThanEqualsValidator(tree);
@@ -60,6 +63,7 @@ export const SumMatchesRuleValidatorFactory = tree => new SumMatchesRuleValidato
 
 treeBuilder
     .addCondition(AND_CONDITION, RulesParserFactory, AndValidatorFactory)
+    .addCondition(EMPTY_CONDITION, DataParserFactory, EmptyValidatorFactory)
     .addCondition(EQUALS_CONDITION, DataValueParserFactory, EqualsValidatorFactory)
     .addCondition(EXISTS_CONDITION, DataValueParserFactory, ExistsValidatorFactory)
     .addCondition(GREATER_THAN_EQUALS_CONDITION, DataValueParserFactory, GreaterThanEqualsValidatorFactory)
