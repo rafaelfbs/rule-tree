@@ -1,4 +1,6 @@
 
+const CHAR_IDENTIFIER_REGEX = /[a-zA-Z0-9_]/;
+
 export class Tokenizer {
     consumeToken(context) {
         const token = this.nextToken(context);
@@ -55,9 +57,7 @@ export class Tokenizer {
     }
 
     isIdentifierChar(char) {
-        return (char >= 'a' && char <= 'z') ||
-            (char >= 'A' && char <= 'Z') ||
-            (char >= '0' && char <= '9');
+        return CHAR_IDENTIFIER_REGEX.test(char);
     }
 
     raiseException(char, position) {
