@@ -16,8 +16,8 @@
   "author": "Rafael Ferrari <rafael.ferrari.bs@gmail.com>",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/rafaelfbs/rule-tree.git"
+    "type": "git",
+    "url": "https://github.com/rafaelfbs/rule-tree.git"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
