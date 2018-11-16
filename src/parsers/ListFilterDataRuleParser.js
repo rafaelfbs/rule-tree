@@ -10,7 +10,7 @@ export class ListFilterDataRuleParser {
             condition,
             options: {
                 list,
-                filter: this.ruleTree.parse(filter),
+                filter: filter ? this.ruleTree.parse(filter) : null,
                 data,
                 rule: this.ruleTree.parse(rule)
             }
