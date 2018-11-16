@@ -1,10 +1,7 @@
-import { BaseValidator } from "./base/BaseValidator";
+import { RulesValidator } from "./base/RulesValidator";
 
-export class AndValidator extends BaseValidator {
+export class AndValidator extends RulesValidator {
     validate(data, rule) {
-        const { rules } = rule.options;
-        
-        return rules
-            .every(rule => this.ruleTree.getValidator(rule.condition).validate(data, rule));
+        return this.getRules(rule).every(rule => this.validateRule(rule, data));
     }
 }

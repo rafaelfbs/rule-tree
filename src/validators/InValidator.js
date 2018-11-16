@@ -1,9 +1,7 @@
-import { BaseValidator } from "./base/BaseValidator";
+import { DataValueValidator } from "./base/DataValueValidator";
 
-export class InValidator extends BaseValidator {
+export class InValidator extends DataValueValidator {
     validate(data, rule) {
-        const { data: selector, value } = rule.options;
-        const selected = this.ruleTree.dataSelector.select(data, selector);
-        return value.includes(selected);
+        return this.getValue(rule).includes(this.select(data, rule));
     }
 }
