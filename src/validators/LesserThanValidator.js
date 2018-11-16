@@ -1,9 +1,7 @@
-import { BaseValidator } from "./base/BaseValidator";
+import { DataValueValidator } from "./base/DataValueValidator";
 
-export class LesserThanValidator extends BaseValidator {
+export class LesserThanValidator extends DataValueValidator {
     validate(data, rule) {
-        const { data: selector, value } = rule.options;
-        const selected = this.ruleTree.dataSelector.select(data, selector);
-        return selected < value;
+        return this.select(data, rule) < this.getValue(rule);
     }
 }

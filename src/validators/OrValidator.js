@@ -1,10 +1,7 @@
-import { BaseValidator } from "./base/BaseValidator";
+import { RulesValidator } from "./base/RulesValidator";
 
-export class OrValidator extends BaseValidator {
+export class OrValidator extends RulesValidator {
     validate(data, rule) {
-        const { rules } = rule.options;
-        
-        return rules
-            .some(rule => this.ruleTree.getValidator(rule.condition).validate(data, rule));
+        return this.getRules(rule).some(rule => this.validateRule(rule, data));
     }
 }

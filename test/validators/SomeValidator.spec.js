@@ -28,6 +28,7 @@ describe('SomeValidator', () => {
 
                 const ruleTree = {
                     getValidator: jest.fn()
+                        .mockReturnValueOnce(validator)
                         .mockReturnValueOnce(validator),
                     dataSelector
                 };
@@ -70,6 +71,7 @@ describe('SomeValidator', () => {
 
                 const ruleTree = {
                     getValidator: jest.fn()
+                        .mockReturnValueOnce(validator)
                         .mockReturnValueOnce(validator),
                     dataSelector
                 };
