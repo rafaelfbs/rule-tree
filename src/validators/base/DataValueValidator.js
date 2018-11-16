@@ -8,4 +8,8 @@ export class DataValueValidator extends BaseValidator {
     getValue(rule) {
         return rule.options.value;
     }
+
+    validate(data, rule) {
+        return this.validateItem(this.select(data, rule), this.getValue(rule));
+    }
 }
