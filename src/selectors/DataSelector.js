@@ -12,6 +12,7 @@ export class DataSelector {
         return node.entries.reduce((data, entry) => {
             if (entry.type === 'property') return this.selectProperty(data, entry, selector);
             if (entry.type === 'method') return this.selectMethod(data, entry, selector);
+            /* istanbul ignore next */
             throw new SyntaxError(`Wrong selector syntax in "${selector.substring(entry.start, entry.end)}"`);
         }, data);
     }

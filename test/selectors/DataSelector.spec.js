@@ -51,6 +51,15 @@ describe('DataSelector', () => {
                 expect(selector.select(data, '.value[]')).toEqual(value);
             });
 
+            it('throws a SyntaxError when property not in data', () => {
+                const data = { prop: 'value' };
+                const value = data.prop;
+
+                const selector = new DataSelector(new Parser(new Tokenizer()));
+
+                expect(() => selector.select(data, '.prop2')).toThrow("No property \"prop2\" in data (.prop2)");
+            });
+
             it('throws a SyntaxError when data selected with flatMap is not an array', () => {
                 const data = { prop: 1 };
                 const selector = new DataSelector(new Parser(new Tokenizer()));

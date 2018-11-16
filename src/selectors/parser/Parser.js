@@ -28,7 +28,7 @@ export class Parser {
             return this.parseIdentifier(context, { type: 'property', start: accessor.start, end: accessor.start });
         }
 
-        this.raiseException(accessor);
+        this.raiseException(accessor, context);
     }
 
     parseIdentifier(context, accessor) {
@@ -45,7 +45,7 @@ export class Parser {
             };
         }
 
-        this.raiseException(identifier);
+        this.raiseException(identifier, context);
     }
 
     parseModifier(context) {
@@ -59,14 +59,14 @@ export class Parser {
                 return { type: 'flat-map-modifier' };
             }
 
-            this.raiseException(modifierEnd);
+            this.raiseException(modifierEnd, context);
         }
 
         return null;
     }
 
-    raiseException(token) {
-        const tokenStr = this.tokenizer.context.selector.substring(token.start, token.end);
+    raiseException(token, context) {
+        const tokenStr = context.selector.substring(token.start, token.end);
         throw new Error(`Unexpected token "${tokenStr}" at position "${token.start}"`);
     }
 }
