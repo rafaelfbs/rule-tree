@@ -10,6 +10,6 @@ export class DataValueValidator extends BaseValidator {
     }
 
     validate(data, rule) {
-        return this.validateItem(this.select(data, rule), this.getValue(rule));
+        return this.validateSelected(this.select(data, rule), this.getValue(rule));
     }
 }

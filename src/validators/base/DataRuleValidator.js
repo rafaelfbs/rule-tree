@@ -10,4 +10,11 @@ export class DataRuleValidator extends BaseValidator {
         const { rule: targetRule } = rule.options;
         return this.ruleTree.getValidator(targetRule.condition).validate(item, targetRule);
     }
+
+    validate(data, rule) {
+        return this.validateSelected(
+            this.select(data, rule),
+            item => this.validateItem(item, rule)
+        );
+    }
 }
