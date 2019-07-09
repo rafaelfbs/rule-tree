@@ -1,6 +1,6 @@
 {
   "name": "rule-tree",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Simpler structure for complex validations",
   "main": "lib/index.js",
   "scripts": {
@@ -20,10 +20,10 @@
     "url": "https://github.com/rafaelfbs/rule-tree.git"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "jest": "^22.4.3"
+    "@babel/core": "^7.4.5",
+    "@babel/cli": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "jest": "^24.8.0"
   },
   "jest": {
     "testURL": "http://localhost/",
