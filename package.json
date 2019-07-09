@@ -1,6 +1,6 @@
 {
   "name": "rule-tree",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Simpler structure for complex validations",
   "main": "lib/index.js",
   "scripts": {
